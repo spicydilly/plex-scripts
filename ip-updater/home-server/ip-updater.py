@@ -25,7 +25,7 @@ def check_if_ip_changed(ip):
     """Checks if IP has changed from last update"""
     with open(home_ip_file, "r", encoding="utf-8") as f:
         for line in f:
-            if line == ip:
+            if line.strip() == ip:
                 return False
     return True
 
@@ -36,13 +36,13 @@ def update_ip(ip):
     remote_ip = ""
     with open(remote_ip_file, "r", encoding="utf-8") as f:
         for line in f:
-            remote_ip = line
-    if remote_ip:
-        with open(home_ip_file, "w", encoding="utf-8") as f:
-            f.write(ip)
+            remote_ip = line.strip()
+            with open(home_ip_file, "w", encoding="utf-8") as f:
+                f.write(ip)
 
-        subprocess.run(["pscp", "-pwfile", pw_file, home_ip_file,
-                        f"root@{remote_ip}:/root/home-ip/"], check=False)
+            subprocess.run(["pscp", "-pwfile", pw_file, home_ip_file,
+                            f"root@{remote_ip}:/root/home-ip/"], check=False)
+            return
 
 
 ip = get_ip()
