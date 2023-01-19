@@ -1,0 +1,25 @@
+server {
+        listen 443 ssl;
+        listen [::]:443 ssl;
+
+        server_name plex.thedylon.com www.plex.thedylon.com;
+
+        location / {
+               proxy_pass https://${PLEX_URL}:58876;
+        }
+
+}
+server {
+    if ($host = plex.thedylon.com) {
+        return 301 https://$host$request_uri;
+    }
+
+    listen 80;
+    listen [::]:80;
+
+    server_name plex.thedylon.com www.plex.thedylon.com;
+
+    return 301 https://$server_name$request_uri;
+
+
+}
