@@ -1,0 +1,1 @@
+"<PATH TO PYTHON3 .exe>" "<PATH TO 'ip-updater.py'>"
