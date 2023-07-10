@@ -1,0 +1,28 @@
+server {
+        listen 443 ssl;
+        listen [::]:443 ssl;
+
+        server_name tautulli.thedylon.com www.tautulli.thedylon.com;
+
+        location / {
+               proxy_pass https://${PLEX_URL}:5528;
+        }
+
+    ssl_certificate /etc/letsencrypt/live/tautulli.thedylon.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/tautulli.thedylon.com/privkey.pem; # managed by Certbot
+}
+server {
+    if ($host = tautulli.thedylon.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    listen [::]:80;
+
+    server_name tautulli.thedylon.com www.tautulli.thedylon.com;
+
+    return 301 https://$server_name$request_uri;
+
+
+}

@@ -5,7 +5,7 @@ server {
         server_name plex.thedylon.com www.plex.thedylon.com;
 
         location / {
-               proxy_pass https://${PLEX_URL}:58876;
+               proxy_pass https://${PLEX_URL}:5527;
         }
 
 }
